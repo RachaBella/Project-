@@ -1,6 +1,7 @@
 console.log("Sanity check !! It works ");
 var myReader = new FileReader();
 var userId;
+//need to fix the regular expression
 var re = /^(([^<>()[]\.,;:s@"]+(.[^<>()[]\.,;:s@"]+)*)|(".+"))@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}])|(([a-zA-Z-0-9]+.)+[a-zA-Z]{2,}))$/igm;
 $(document).ready(function (){
 	 pageLoad();
@@ -129,18 +130,18 @@ function pageLoad(){
 	$('#signUp').on('click', function (event) {
 		event.preventDefault();
 
-		if(($('#firstName').val()==='') || ($('#lastName').val() ==='') || ($('#email').val()==='') || (!re.test($('#email').val())) || ($('#password').val()==='')){
+		if(($('#firstName').val()==='') || ($('#lastName').val() ==='') || ($('#email').val()==='') /*|| (!re.test($('#email').val())) */|| ($('#password').val()==='')){
 			swal("Error!", "You should fill the information in the required fields. TRY AGAIN");
-			if( !re.test($('#email').val())) {
+			/*if( !re.test($('#email').val())) {
 				swal("Error!", "You should use a valid mail. Try again");
-			}
+			}*/
 		}
 		else {
 			$.post('/users', $('#signupForm').serialize(), function (response) {
 			console.log('the serialize is', $('.form').serialize() )
 			console.log('congrats new User : ', response);
 			$('.signButton').hide();
-			$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+response.firstName +'">Profile</a></li><li class="divider"></li><li><a id="logOut" href="">Log out</a></li></ul></li>')
+			$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+response.firstName +'">Profile</a></li><li class="divider"></li><li><a id="logOut">Log out</a></li></ul></li>')
 			$('#field1').html('<label>First Name<span class="req">*</span></label><input type="text" name="firstName" id="firstName" required autocomplete="off" />');
 			$('#field2').html('<label>Last Name<span class="req">*</span></label><input name ="lastName" id="lastName" type="text"required autocomplete="off"/>');
 			$('#field3').html('<label>Email Address<span class="req">*</span></label><input type="email" name ="email" id= "email" required autocomplete="off"/>');
@@ -201,7 +202,8 @@ function pageLoad(){
 	  				}
   				});
   				swal("Logged Out!", "Your are now logged out", "success"); 
-  				window.location.href = "/"; //it is not relocating to the /
+  				window.location.href='/';
+  				//window.location.href = window.location.origin +'/' ;//it is not relocating to the /
 			});	
 	});
 
@@ -287,10 +289,10 @@ function pageLoad(){
 				$('.signButton').remove();
 				$('#ulNav').append('<li class="dropdown" id="'+data.user._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+data.user.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a  id ="profileButton" href="/profile/'+ data.user.firstName +'">Profile</a></li><li class="divider"></li><li><a id="logOut" href="#">Log out</a></li></ul></li>')
 				$('#InputEmail').val(data.user.email);
-			}/*else if (data.user === undefined) {
+			}else if (data.user === null) {
 				console.log('out of session');
 				window.location.href="/";
-			}*/
+			}
 			return userId;
 		});
 	};
