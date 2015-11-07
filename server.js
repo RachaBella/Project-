@@ -39,6 +39,7 @@ pass: pass
 // 
 app.get('/',function (req, res){
 	var advices=[];
+	console.log('we are at the get / request');
 		if ( req.session.user === undefined) {
 			db.Advice.find().populate("keywords").exec(function (error , advicesFound) {
 						for (var i=0; i< advicesFound.length;i++){
@@ -114,7 +115,7 @@ app.post('/users', function (req, res) {
 });
 
 //log out :
-app.post('/logout', function (req , res) {
+app.get('/logout', function (req , res) {
 	req.session.user = null;
 	req.session.userId=null;
 	res.json(req.session.user);

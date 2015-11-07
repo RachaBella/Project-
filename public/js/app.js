@@ -141,11 +141,19 @@ function pageLoad(){
 			console.log('the serialize is', $('.form').serialize() )
 			console.log('congrats new User : ', response);
 			$('.signButton').hide();
-			$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+response.firstName +'">Profile</a></li><li class="divider"></li><li><a id="logOut">Log out</a></li></ul></li>')
-			$('#field1').html('<label>First Name<span class="req">*</span></label><input type="text" name="firstName" id="firstName" required autocomplete="off" />');
-			$('#field2').html('<label>Last Name<span class="req">*</span></label><input name ="lastName" id="lastName" type="text"required autocomplete="off"/>');
-			$('#field3').html('<label>Email Address<span class="req">*</span></label><input type="email" name ="email" id= "email" required autocomplete="off"/>');
-			$('#field4').html('<label>Set A Password<span class="req">*</span></label><input type="password" name="password" id="password" required autocomplete="off"/>')
+			$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+response.firstName +'">Profile</a></li><li class="divider"></li><li><a href="#" id="logOut">Log out</a></li></ul></li>')
+			$("#firstName").val('');
+			label = $("#firstName").prev('label');
+			label.removeClass('active highlight');
+			$('#lastName').val('');
+			label = $("#lastName").prev('label');
+			label.removeClass('active highlight');
+			$('#email').val('');
+			label = $("#email").prev('label');
+			label.removeClass('active highlight');
+			$('#password').val('');
+			label = $("#password").prev('label');
+			label.removeClass('active highlight');
 			disappearForm();
 		});
 		}
@@ -167,11 +175,14 @@ function pageLoad(){
 				console.log("the response is :" , response);
 				if ((response !== null)&& (response !=='wrong email') && (response !== 'password wrong')) {
 					$('.signButton').hide();
-					$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+ response.firstName+'">Profile</a></li><li class="divider"></li><li><a id="logOut" >Log out</a></li></ul></li>')
+					$('#ulNav').append('<li class="dropdown" id="'+response._id +'"><a href="#" class="page-scroll dropdown-toggle" data-toggle="dropdown">'+response.firstName+'<span class="caret"></span></a><ul class="dropdown-menu" role="menu"><li><a id ="profileButton" href="/profile/'+ response.firstName+'">Profile</a></li><li class="divider"></li><li><a href="#" id="logOut" >Log out</a></li></ul></li>')
 					disappearForm();
-					$('#field5').html('<label>Email Address<span class="req">*</span></label><input type="email" name ="email2" id= "email2" required autocomplete="off"/>');
-					$('#field6').html('<label>Set A Password<span class="req">*</span></label><input type="password" name="password2" id="password2" required autocomplete="off"/>')
-			
+					$('#email2').val('');
+					label = $("#email2").prev('label');
+					label.removeClass('active highlight');
+					$('#password2').val('');
+					label = $("#password2").prev('label');
+					label.removeClass('active highlight');
 				} else if (response === 'wrong email') {
 					swal("Error!", "This user doesn't exist, Try again !");
 				} else if (response ==="password wrong") {
@@ -194,15 +205,13 @@ function pageLoad(){
 			closeOnConfirm: false 
 		}, 
 			function(){  
-				$.post('/logout', function (response) {
+				$.get('/logout', function (response) {
   					console.log("the response from the logout request :", response);
-	  				if (response === null) {
-		  				$('.dropdown').remove();
-		  				$('.signButton').show();
-	  				}
+		  			$('.dropdown').remove();
+		  			$('.signButton').show();
+		  			//document.location="/";
   				});
   				swal("Logged Out!", "Your are now logged out", "success"); 
-  				window.location.href='/';
   				//window.location.href = window.location.origin +'/' ;//it is not relocating to the /
 			});	
 	});
