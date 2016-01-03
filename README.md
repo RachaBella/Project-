@@ -16,19 +16,18 @@ Fork or clone to your local repository. Then in the command prompt run npm insta
 ##Product Backlog
 The user stories: 
 
-  ##Sprint 1
+**Sprint 1**
    - The user can sign up if he uses the site for the first time
    - The user can login
    - The user can update his profile where he can add information about his network, and medical history (his illenesses)
   
-  ##Sprint 2
+**Sprint 2**
    - The can get home remedies advices by chosing one of the available keyword
    - The user can get adapted advices depending on the information in his profile
   
-  ##Sprint 3
+**Sprint 3**
    - The user can contact a doctor by sending a question in the contact section
    - The user can have a live chat with an available doctor (not implemented yet)
-   -
 
 ##Live website 
  http://i-help.herokuapp.com
