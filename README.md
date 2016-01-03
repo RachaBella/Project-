@@ -30,4 +30,4 @@ Fork or clone to your local repository. Then in the command prompt run npm insta
    -
 
 ##Live website 
- i-help.herokuapp.com
+ http://i-help.herokuapp.com
